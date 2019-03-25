@@ -1,4 +1,5 @@
-from tkinter import Tk, Label, Button
+import tkinter
+from tkinter import *
 import image_editor as ie
 
 class MyFirstGUI:
@@ -6,13 +7,13 @@ class MyFirstGUI:
         self.master = master
         master.title("UTOPIA IE")
 
-        self.label = Label(master, text="WELCOME TO THE UTOPIA IMAGE EDITOR")
-        self.label.pack()
+        # self.label = Label(master, text="WELCOME TO THE UTOPIA IMAGE EDITOR")
+        # self.label.pack()
 
         self.open_button = Button(master, text="Open", command= self.open())
         self.open_button.pack()
 
-        self.rotate_button = Button(master, text="Rotate",command= master.rotate(self.img))
+        self.rotate_button = Button(master, text="Rotate",command= ie.rotate(self.img))
         self.rotate_button.pack()
 
         self.resize_button = Button(master, text="Resize",command= ie.resize(self.img))
@@ -37,6 +38,6 @@ class MyFirstGUI:
         self.img2 = input()
         ie.picture_over_picture(self.img,self.img2)
 
-root = Tk()
+root = tk.Tk()
 my_gui = MyFirstGUI(root)
 root.mainloop()
