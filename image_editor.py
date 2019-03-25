@@ -41,13 +41,13 @@ def resize(name):
     except IOError:
         pass
 
-def picture_over_picture(name1):
+def picture_over_picture(name1,name2):
     try:
         #Relative Path
         #Image on which we want to paste
         img = Image.open(name1)
 
-        name2 = input("Enter path of image 2: ")
+        # name2 = input("Enter path of image 2: ")
         #Relative Path
         #Image which we want to paste
         img2 = Image.open(name2)
@@ -73,28 +73,31 @@ def mirror(name):
         pass
 
 
+def main():
+    print("Welcome To Utopia Image Editor!")
+    path = input("Enter image path: ")
+    print("Utopia provides various functioalities.. ")
+    n=0
+    while(n!=8):
+        print("1.Open 2.Properties 3.Rotate 4.Resize 5.Mirror 6.Merge 7.Save 8.Exit")
+        n=int(input("Enter your choice= "))
+        if(n==1):
+            img = Image.open(path)
+            print("Opened")
+        elif(n==2):
+            properties(path)
+        elif(n==3):
+            rotate(path)
+        elif(n==4):
+            resize(path)
+        elif(n==5):
+            picture_over_picture(path)
+        elif(n==6):
+            mirror(path)
+        elif(n==7):
+            save(path)
+        else:
+            n=8
 
-print("Welcome To Utopia Image Editor!")
-path = input("Enter image path: ")
-print("Utopia provides various functioalities.. ")
-n=0
-while(n!=8):
-    print("1.Open 2.Properties 3.Rotate 4.Resize 5.Mirror 6.Merge 7.Save 8.Exit")
-    n=int(input("Enter your choice= "))
-    if(n==1):
-        img = Image.open(path)
-        print("Opened")
-    elif(n==2):
-        properties(path)
-    elif(n==3):
-        rotate(path)
-    elif(n==4):
-        resize(path)
-    elif(n==5):
-        picture_over_picture(path)
-    elif(n==6):
-        mirror(path)
-    elif(n==7):
-        save(path)
-    else:
-        n=8
+if __name__ == '__main__':
+    main()
