@@ -1,9 +1,11 @@
 from PIL import Image
 
-def properties(img):
+
+def properties(path):
     filename = "image.png"
-    with Image.open(filename) as image:
-        width, height = image.size
+    img = Image.open(path)
+    width, height = img.size
+    print("Width = "+str(width)+" Height = "+str(height))
         #Image.size gives a 2-tuple and the width, height can be obtained
 
 def save(img):
@@ -39,17 +41,18 @@ def resize(name):
     except IOError:
         pass
 
-def picture_over_picture(name1,name2):
+def picture_over_picture(name1):
     try:
         #Relative Path
         #Image on which we want to paste
         img = Image.open(name1)
 
+        name2 = input("Enter path of image 2: ")
         #Relative Path
         #Image which we want to paste
         img2 = Image.open(name2)
         new_img = img.paste(img2, (50, 50))
-        new = "new " + new_img
+        new = "new " + name1
         #Saved in the same relative location
         img.save(new)
 
@@ -72,25 +75,26 @@ def mirror(name):
 
 
 print("Welcome To Utopia Image Editor!")
-img = input("Enter image path: ")
+path = input("Enter image path: ")
 print("Utopia provides various functioalities.. ")
 n=0
 while(n!=8):
     print("1.Open 2.Properties 3.Rotate 4.Resize 5.Mirror 6.Merge 7.Save 8.Exit")
     n=int(input("Enter your choice= "))
     if(n==1):
-        Image.open(img)
+        img = Image.open(path)
+        print("Opened")
     elif(n==2):
-        properties(img)
+        properties(path)
     elif(n==3):
-        rotate(img)
+        rotate(path)
     elif(n==4):
-        resize(img)
+        resize(path)
     elif(n==5):
-        picture_over_picture(img)
+        picture_over_picture(path)
     elif(n==6):
-        mirror(img)
+        mirror(path)
     elif(n==7):
-        save(img)
+        save(path)
     else:
         n=8
