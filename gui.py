@@ -33,6 +33,12 @@ class MyFirstGUI:
         self.ioi_button = Button(master, text="Img over Img",command= self.pop)
         self.ioi_button.pack(side = LEFT, anchor = S)
 
+        self.undo_button = Button(master, text= "Undo", command = self.undo)
+        self.undo_button.pack(side = LEFT, anchor = S)
+
+        self.redo_button = Button(master, text= "Redo", command = self.redo)
+        self.redo_button.pack(side = LEFT, anchor = S)
+
         self.close_button = Button(master, text="Close", command=master.quit)
         self.close_button.pack(side = LEFT, anchor = S)
 
@@ -44,6 +50,17 @@ class MyFirstGUI:
 
         self.Submit = Button(master, text = "Submit", command = self.get)
         self.Submit.pack(side = LEFT, anchor = S)
+
+        # messagebox.showinfo("Utopia IE","Welcome!")
+        menubar = Menu(master)
+        master.config(menu=menubar)
+
+        fileMenu = Menu(menubar)
+
+        fileMenu.add_command(label="Open", command=self.open)
+        fileMenu.add_command(label="Exit", command=master.quit)
+
+        menubar.add_cascade(label="File", menu=fileMenu)
 
     def open(self):
         # print("Enter file path:")
@@ -109,6 +126,20 @@ class MyFirstGUI:
         # self.canvas.create_image(0, 0,anchor = NW, image=imge)
         # self.canvas.image = imge
 
+    def undo(self):
+        img = Image.open(self.prev)
+        imge = ImageTk.PhotoImage(img)
+        width, height = img.size
+        self.canvas.create_image(0, 0,anchor = NW, image=imge)
+        self.canvas.image = imge
+
+    def redo(self):
+        img = Image.open(self.img)
+        imge = ImageTk.PhotoImage(img)
+        width, height = img.size
+        self.canvas.create_image(0, 0,anchor = NW, image=imge)
+        self.canvas.image = imge
+
     def get(self):
         self.input = self.e_2.get()
 
@@ -127,7 +158,9 @@ class MyFirstGUI:
 
             self.img2 = self.input
             print(self.img2)
+            self.prev = self.img
             self.mod = ie.picture_over_picture(self.img,self.img2)
+            self.img = self.mod    #making the modified image the current self.img object of class MyFirstGUI
             img = Image.open(self.mod)
             imge = ImageTk.PhotoImage(img)
             width, height = img.size
@@ -136,26 +169,35 @@ class MyFirstGUI:
         elif self.choice == 3:
             self.v.set("Enter the degree of ROTATION:")
             self.degree = self.e_2.get()
+            self.prev = self.img
             self.mod = ie.rotate(self.img,float(self.degree))
+            self.img = self.mod    #making the modified image the current self.img object of class MyFirstGUI
             img = Image.open(self.mod)
             imge = ImageTk.PhotoImage(img)
             width, height = img.size
             self.canvas.create_image(0, 0,anchor = NW, image=imge)
             self.canvas.image = imge
         elif self.choice == 4:
+            self.prev = self.img
             self.mod = ie.resize(self.img)
             img = Image.open(self.mod)
             imge = ImageTk.PhotoImage(img)
             width, height = img.size
             self.canvas.create_image(0, 0,anchor = NW, image=imge)
             self.canvas.image = imge
-        else:
+        elif self.choice == 5:
             self.mod = ie.mirror(self.img)
+            self.prev = self.img
+            print(self.mod)
             img = Image.open(self.mod)
             imge = ImageTk.PhotoImage(img)
             width, height = img.size
             self.canvas.create_image(0, 0,anchor = NW, image=imge)
             self.canvas.image = imge
+        elif self.choice == 6:
+            self.undo()
+        else:
+            self.redo()
 
         # print(self.img)
         # print(type(self.img))
