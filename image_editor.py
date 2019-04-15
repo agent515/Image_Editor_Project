@@ -13,24 +13,27 @@ def save(img):
     # format is optional, if no format is specified,
     #it is determined from the filename extension
 
-def rotate(name):
+def rotate(name,degree):
     try:
         #Relative Path
+        print(name)
         img = Image.open(name)
-        print("THE IMAGE ROTATION")
-        angle = float(input("Degree: "))
+        # print("THE IMAGE ROTATION")
+        # angle = float(input("Degree: "))
         #Angle given
-        img = img.rotate(angle)
+        img = img.rotate(degree)
         new = "new " + name
         #Saved in the same relative location
         img.save(new)
+        print(new)
+        return new
     except IOError:
         pass
 
 def resize(name):
     try:
          #Relative Path
-        img = Image.open("name")
+        img = Image.open(name)
         width, height = img.size
 
         img = img.resize((width/2, height/2))
@@ -38,6 +41,7 @@ def resize(name):
         #Saved in the same relative location
         new = "new " + name
         img.save(new)
+        return new
     except IOError:
         pass
 
@@ -55,7 +59,7 @@ def picture_over_picture(name1,name2):
         new = "new " + name1
         #Saved in the same relative location
         img.save(new)
-
+        return new
     except IOError:
         pass
 
@@ -66,12 +70,29 @@ def mirror(name):
 
         #transposing image
         transposed_img = img.transpose(Image.FLIP_LEFT_RIGHT)
-
+        new = "tp" + name
         #Save transposed image
-        transposed_img.save("transposed.jpg")
+        transposed_img.save(new)
+
+        return new
     except IOError:
         pass
 
+def crop(path,width,height):
+    try:
+        #Relative Path
+        img = Image.open(path)
+        # width, height = img.size
+
+        area = (0, 0, width, height)
+        cropped_img = img.crop(area)
+
+        #Saved in the same relative location
+        new = "cropped " + path
+        cropped_img.save(new)
+        return new
+    except IOError:
+        pass
 
 def main():
     print("Welcome To Utopia Image Editor!")
